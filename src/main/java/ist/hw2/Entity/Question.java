@@ -17,6 +17,7 @@ public class Question {
     @Column
     private String domain;
 
+    // Don't forget set/get function
     public Integer getId() {
         return id;
     }
@@ -40,5 +41,5 @@ public class Question {
     public void setDomain(String domain) {
         this.domain = domain;
     }
-    
+
 }
