@@ -20,6 +20,13 @@ public class DemoController {
         return questionService.getOneById(1);
     }
 
+    /*
+    Request body:
+    {
+      "quality": 15.0,
+      "domain": "web service"
+    }
+    */
     @ResponseBody
     @PostMapping(path="/add")
     public void addNewUser(@RequestBody Question n){
