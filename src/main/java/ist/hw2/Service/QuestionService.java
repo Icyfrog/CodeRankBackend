@@ -47,19 +47,16 @@ public class QuestionService {
 
     public List<Question> getAllRankQuestionsId(String domain) {
         Iterable<Question> questionsByDomain = getAllByDomainTest(domain);
-        List<IdQualityPair> idQualityList = new ArrayList<>();
-        //Iterator<Question> questionIterator = questionsByDomain.iterator();
         List<Question> questionList = Lists.newArrayList(questionsByDomain);
-                //IteratorUtils.toList(questionIterator)
-        for(Question question:questionsByDomain) {
-            IdQualityPair tmpIdQualityPair =
-                    new IdQualityPair(question.getId(),question.getQuality());
-            idQualityList.add(tmpIdQualityPair);
-            //idQualityPairs.add(tmpIdQualityPair);
-        }
-        Collections.sort(questionList, new SortByQuality());
+        questionList.sort(new SortByQuality());
         return questionList;
     }
+
+    public Question getOneHighQualityQuestion(String domain) {
+        List<Question> questionList = getAllRankQuestionsId(domain);
+        return questionList.get(0);
+    }
+
 /*
     public Question getOneRankQuestion (String domain, Integer ranking) {
         Iterable<Question> questionsByDomain = getAllByDomainTest(domain);
