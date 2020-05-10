@@ -5,6 +5,8 @@ import ist.hw2.Service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/demo")
 public class DemoController {
@@ -18,6 +20,12 @@ public class DemoController {
 
         System.out.println("get demo");
         return questionService.getOneById(1);
+    }
+
+    @ResponseBody
+    @GetMapping(path="/getlist")
+    public List<Question> getAllRankQuestionsId() {
+        return questionService.getAllRankQuestionsId("sql");
     }
 
     /*

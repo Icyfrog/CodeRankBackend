@@ -13,9 +13,6 @@ public class TestPaper {
     private String create_time;
 
     @Column
-    private String access_url;
-
-    @Column
     private String description;
 
     @Column
@@ -29,9 +26,6 @@ public class TestPaper {
         return id;
     }
 
-    public String getAccess_url() {
-        return access_url;
-    }
 
     public String getAnswer_content() {
         return answer_content;
@@ -43,10 +37,6 @@ public class TestPaper {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setAccess_url(String access_url) {
-        this.access_url = access_url;
     }
 
     public void setAnswer_content(String answer_content) {
