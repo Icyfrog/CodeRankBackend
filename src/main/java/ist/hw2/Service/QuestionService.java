@@ -22,4 +22,5 @@ public class QuestionService {
     public void save(Question question) {
         questionDao.save(question);
     }
+
 }
