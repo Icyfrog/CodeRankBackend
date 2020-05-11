@@ -66,12 +66,24 @@ public class DemoController {
     public JSONObject addTestPaper(@RequestBody JSONObject data) {
         return testPaperService.getOneNewTestPaper(data);
     }
-/*
+
+
+    /*
+    Request body:
+    {
+	"id": 177,      // the id for paper
+	"content": "177 content test"       // content of the interviewee's answer sheet
+    }
+    */
     @ResponseBody
-    @GetMapping(path = "/getTestPaper")
-    public JSONArray getTestPaper(@RequestParam Integer testPaperId) {
-        return testPaperService.getOneTestPaper(testPaperId);
+    @PostMapping(path="/answerPaper")
+    public void answerPaper(@RequestBody JSONObject data) {
+        testPaperService.answerPaper(data);
     }
 
- */
+    @ResponseBody
+    @GetMapping(path = "/getAnswerSheet")
+    public String getAnswerSheet(@RequestParam Integer asID) {
+        return testPaperService.get_paper_content(asID);
+    }
 }

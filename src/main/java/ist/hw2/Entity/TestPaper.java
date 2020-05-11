@@ -16,7 +16,7 @@ public class TestPaper {
     private String description;
 
     @Column
-    private String answer_content;
+    private Integer answer_content_id;
 
     public void setId(Integer id) {
         this.id = id;
@@ -26,9 +26,8 @@ public class TestPaper {
         return id;
     }
 
-
-    public String getAnswer_content() {
-        return answer_content;
+    public Integer getAnswer_content_id() {
+        return answer_content_id;
     }
 
     public String getCreate_time() {
@@ -39,8 +38,8 @@ public class TestPaper {
         return description;
     }
 
-    public void setAnswer_content(String answer_content) {
-        this.answer_content = answer_content;
+    public void setAnswer_content_id(Integer answer_content_id) {
+        this.answer_content_id = answer_content_id;
     }
 
     public void setCreate_time(String create_time) {
