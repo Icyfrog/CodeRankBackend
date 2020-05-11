@@ -1,5 +1,10 @@
 ##### Mind the database setting in file *application.properties*
 
+Get all questions:
+- localhost:8080/demo/getQuestions
+- @GetMapping
+- return List<Question>(JSONArray)
+---
 Add one question:
 - localhost:8080/demo/addQuestion
 - @PostMapping
@@ -12,14 +17,21 @@ Add one question:
 - no return
 ---
 
+Get all questions:
+- localhost:8080/demo/getTestPapers
+- @GetMapping
+- return List<Testpaper>(JSONArray)
+---
 Add one test paper
 - localhost:8080/demo/addTestPaper
 - @PostMapping
 -     Request body:
       {
-        num:the number of questions,
-        domains: a String separate by ',' || E.G. "sql,web,c++",
-        description: the paper description 
+        "name": "test name",
+        "difficulty": 5,
+        "num": the number of questions,
+        "domains": a String separate by ',' || E.G. "sql,web,c++",
+        "description": the paper description 
       }
 -     Output--JSONObject:
       {
