@@ -16,6 +16,9 @@ public class Question {
     private String question_content;
 
     @Column
+    private String name;
+
+    @Column
     private String reference_answer;
 
     @Column
@@ -25,7 +28,7 @@ public class Question {
     private String domain;
 
     @Column
-    private Float correct_rate;
+    private Integer difficulty;
 
     @Column
     private Integer approximate_time;       // unit of time: minute
@@ -43,6 +46,14 @@ public class Question {
         return quality;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setQuality(Float quality) {
         this.quality = quality;
     }
@@ -55,9 +66,6 @@ public class Question {
         this.domain = domain;
     }
 
-    public Float getCorrect_rate() {
-        return correct_rate;
-    }
 
     public Integer getApproximate_time() {
         return approximate_time;
@@ -75,9 +83,6 @@ public class Question {
         this.approximate_time = approximate_time;
     }
 
-    public void setCorrect_rate(Float correct_rate) {
-        this.correct_rate = correct_rate;
-    }
 
     public void setQuestion_content(String question_content) {
         this.question_content = question_content;
@@ -85,5 +90,13 @@ public class Question {
 
     public void setReference_answer(String reference_answer) {
         this.reference_answer = reference_answer;
+    }
+
+    public Integer getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
     }
 }

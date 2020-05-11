@@ -92,4 +92,8 @@ public class TestPaperService {
         PaperContent paperContent = testPaperDao.getPaperContentById(id);
         return paperContent.getContent();
     }
+
+    public List<TestPaper> getAll() {
+        return testPaperDao.getAll();
+    }
 }

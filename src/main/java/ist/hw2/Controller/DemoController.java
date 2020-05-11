@@ -3,6 +3,7 @@ package ist.hw2.Controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import ist.hw2.Entity.Question;
+import ist.hw2.Entity.TestPaper;
 import ist.hw2.Service.QuestionService;
 import ist.hw2.Service.TestPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class DemoController {
 
     @Autowired
     TestPaperService testPaperService;
+
+    @ResponseBody
+    @GetMapping(path="/getQuestions")
+    public List<Question> getAllQuestions() {
+        return questionService.getAll();
+    }
+
+    @ResponseBody
+    @GetMapping(path="/getTestPapers")
+    public List<TestPaper> getAllPapers() {
+        return testPaperService.getAll();
+    }
 
     /*
      * use for test, no use for final version
@@ -44,6 +57,8 @@ public class DemoController {
         question.setApproximate_time(data.getInteger("approximate_time"));
         question.setQuality((float) 10);
         question.setDomain(data.getString("domain"));
+        question.setDifficulty(data.getInteger("difficulty"));
+        question.setName(data.getString("name"));
         question.setQuestion_content(data.getString("question_content"));
         questionService.save(question);
     }

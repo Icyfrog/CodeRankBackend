@@ -6,6 +6,8 @@ import ist.hw2.Repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class QuestionDao {
 
@@ -28,6 +30,10 @@ public class QuestionDao {
 
     public void delete(Integer id) {
         questionRepository.deleteById(id);
+    }
+
+    public List<Question> getAll() {
+        return questionRepository.findAll();
     }
 
 }

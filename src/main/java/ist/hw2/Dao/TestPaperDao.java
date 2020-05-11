@@ -7,6 +7,8 @@ import ist.hw2.Repository.TestPaperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class TestPaperDao {
 
@@ -18,6 +20,10 @@ public class TestPaperDao {
 
     public TestPaper getOneById(Integer id) {
         return testPaperRepository.getOne(id);
+    }
+
+    public List<TestPaper> getAll() {
+        return testPaperRepository.findAll();
     }
 
     public void save(TestPaper testPaper) {

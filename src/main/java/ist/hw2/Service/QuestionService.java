@@ -35,6 +35,10 @@ public class QuestionService {
         return questionDao.getQuestionsByDomain(domain);
     }
 
+    public List<Question> getAll() {
+        return questionDao.getAll();
+    }
+
     public Question getOneById(Integer id) {
         System.out.println("Service" + id);
         return questionDao.getOneById(id);
@@ -43,7 +47,6 @@ public class QuestionService {
     public void save(Question question) {
         questionDao.save(question);
     }
-
 
     public List<Question> getAllRankQuestionsId(String domain) {
         Iterable<Question> questionsByDomain = getAllByDomainTest(domain);
