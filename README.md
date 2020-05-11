@@ -3,7 +3,7 @@
 Get all questions:
 - localhost:8080/demo/getQuestions
 - @GetMapping
-- return List<Question>(JSONArray)
+- return List of Questions (JSONArray)
 ---
 Add one question:
 - localhost:8080/demo/addQuestion
@@ -20,7 +20,7 @@ Add one question:
 Get all questions:
 - localhost:8080/demo/getTestPapers
 - @GetMapping
-- return List<Testpaper>(JSONArray)
+- return List of TestPapers (JSONArray)
 ---
 Add one test paper
 - localhost:8080/demo/addTestPaper
