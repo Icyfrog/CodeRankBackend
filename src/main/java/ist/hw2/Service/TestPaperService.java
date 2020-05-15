@@ -77,7 +77,6 @@ public class TestPaperService {
      */
     public Paper getOneNewTestPaper(JSONObject demand) {
 
-        //JSONObject requestData = getRequest(demand.getString("companyMessageId"));
         Paper paper = new Paper();
         TestPaper testPaper = new TestPaper();
         testPaper.setTittle(demand.getString("tittle"));
@@ -131,26 +130,37 @@ public class TestPaperService {
     public Paper getOnePaper(Integer paperID) {
 
         TestPaper testPaper = testPaperDao.getOneById(paperID);
-        String jsonStr = JSONObject.toJSONString(testPaper);
+        //String jsonStr = JSONObject.toJSONString(testPaper);
 
 
         List<QuestionsInPaper> list = questionInPaperDao.getAllByPaper(testPaper);
 
-        List<Question> qList = new ArrayList<>();
+        //List<Question> qList = new ArrayList<>();
+        List<String> typeList = new ArrayList<>();
         List<QuestionsInPaper> qInfoList = new ArrayList<>();
 
         for(QuestionsInPaper q:list) {
             Question question = q.question;
-            qList.add(question);
+            typeList.add(question.getDomain());
+            //qList.add(question);
             qInfoList.add(q);
         }
         //JSONArray questionList = JSONArray.parseArray(JSON.toJSONString(qList));
-        JSONArray questionInfoList = JSONArray.parseArray(JSON.toJSONString(qInfoList));
+
 
         Paper paper = new Paper();
         paper.setPaperID(paperID);
-        paper.setPaperInfo(JSONObject.parseObject(jsonStr));
+        JSONObject paperInfo = new JSONObject();//JSONObject.parseObject(jsonStr);
+        paperInfo.put("companyName",testPaper.getTittle());
+        paperInfo.put("paperId",paperID);
+        paperInfo.put("finishTime",testPaper.getTime());
+        paperInfo.put("type", typeList);
+        paperInfo.put("questionAmt",qInfoList.size());
+        paper.setPaperInfo(paperInfo);
+
+        JSONArray questionInfoList = JSONArray.parseArray(JSON.toJSONString(qInfoList));
         paper.setQuestionList(questionInfoList);
+
         return paper;
 
     }
