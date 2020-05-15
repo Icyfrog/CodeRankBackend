@@ -22,7 +22,7 @@ public class Question {
     private String reference_answer;
 
     @Column
-    private Float quality;
+    private Integer quality;
 
     @Column
     private String domain;
@@ -42,7 +42,7 @@ public class Question {
         this.questionID = id;
     }
 
-    public Float getQuality() {
+    public Integer getQuality() {
         return quality;
     }
 
@@ -54,7 +54,7 @@ public class Question {
         this.name = name;
     }
 
-    public void setQuality(Float quality) {
+    public void setQuality(Integer quality) {
         this.quality = quality;
     }
 

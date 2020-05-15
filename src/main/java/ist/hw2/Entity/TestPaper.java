@@ -18,18 +18,54 @@ public class TestPaper {
     private String create_time;
 
     @Column
-    private String description;
+    private String tittle;
 
     @Column
     private Integer answer_content_id;
 
+    @Column
+    private Integer time;
 
-    public void setId(Integer id) {
-        this.TestPaperID = id;
+    @Column
+    private String deadline;
+
+    @Column
+    private Integer status;
+
+    public void setTime(Integer time) {
+        this.time = time;
     }
 
-    public Integer getId() {
+    public Integer getTime() {
+        return time;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public Integer getTestPaperID() {
         return TestPaperID;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 
     public Integer getAnswer_content_id() {
@@ -40,9 +76,6 @@ public class TestPaper {
         return create_time;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public void setAnswer_content_id(Integer answer_content_id) {
         this.answer_content_id = answer_content_id;
@@ -52,9 +85,7 @@ public class TestPaper {
         this.create_time = create_time;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTestPaperID(Integer testPaperID) {
+        TestPaperID = testPaperID;
     }
-
-
 }

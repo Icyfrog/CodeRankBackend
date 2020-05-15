@@ -1,5 +1,6 @@
 package ist.hw2.DTO;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import ist.hw2.Entity.Question;
 
@@ -38,12 +39,18 @@ paperId: this.$route.params.id,
 public class Paper {
     private Integer paperID;
     private JSONObject paperInfo;
-    private Integer time;
-    private List<Question> questionList;
+    private JSONArray questionList;
+    private JSONArray questionInfoList;
 
-    public Integer getTime() {
-        return time;
+    public JSONArray getQuestionInfo() {
+        return questionInfoList;
     }
+
+    public void setQuestionInfo(JSONArray questionInfo) {
+        this.questionInfoList = questionInfo;
+    }
+
+
 
     public JSONObject getPaperInfo() {
         return paperInfo;
@@ -53,7 +60,7 @@ public class Paper {
         this.paperInfo = paperInfo;
     }
 
-    public List<Question> getQuestionList() {
+    public JSONArray getQuestionList() {
         return questionList;
     }
 
@@ -65,11 +72,9 @@ public class Paper {
         this.paperID = paperID;
     }
 
-    public void setQuestionList(List<Question> questionList) {
+    public void setQuestionList(JSONArray questionList) {
         this.questionList = questionList;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
-    }
+
 }

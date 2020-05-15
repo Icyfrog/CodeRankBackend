@@ -1,5 +1,6 @@
 package ist.hw2.Repository;
 
+import ist.hw2.Entity.Question;
 import ist.hw2.Entity.QuestionsInPaper;
 import ist.hw2.Entity.TestPaper;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,6 @@ import java.util.List;
 public interface QuestionInPaperRepository extends JpaRepository<QuestionsInPaper, Integer> {
 
     List<QuestionsInPaper> findAllByTestPaper(TestPaper testPaper);
+
+    QuestionsInPaper findByQuestionAndTestPaper(Question q, TestPaper t);
 }

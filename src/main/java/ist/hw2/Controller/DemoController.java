@@ -1,7 +1,9 @@
 package ist.hw2.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import ist.hw2.DTO.Paper;
 import ist.hw2.Entity.Question;
 import ist.hw2.Entity.TestPaper;
@@ -10,6 +12,9 @@ import ist.hw2.Service.TestPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin
@@ -35,14 +40,6 @@ public class DemoController {
         return testPaperService.getAll();
     }
 
-    /*
-     * use for test, no use for final version
-     */
-    @ResponseBody
-    @GetMapping(path="/getList")
-    public List<Question> getAllRankQuestionsId(@RequestParam String domain) {
-        return questionService.getAllRankQuestionsId(domain);
-    }
 
     /*
     Request body:
@@ -57,7 +54,7 @@ public class DemoController {
     public void addNewUser(@RequestBody JSONObject data){
         Question question = new Question();
         question.setApproximate_time(data.getInteger("approximate_time"));
-        question.setQuality((float) 10);
+        question.setQuality(10);
         question.setDomain(data.getString("domain"));
         question.setDifficulty(data.getInteger("difficulty"));
         question.setName(data.getString("name"));
@@ -65,25 +62,24 @@ public class DemoController {
         questionService.save(question);
     }
 
-    /*
-     * Input--demand:
-     * {
-     *      num:the number of questions,
-     *      domains: a String separate by ',' || E.G. "sql,web,c++",
-     *      description: the paper description
-     *
-     * }
-     *
-     * Output--JSONObject:
-     *      paperId: Integer the paper id
-     *      QuestionList: a JSONArray containing questions
-     */
     @ResponseBody
     @PostMapping(path="/addTestPaper")
     public Paper addTestPaper(@RequestBody JSONObject data) {
         return testPaperService.getOneNewTestPaper(data);
     }
 
+    @ResponseBody
+    @GetMapping(path = "/getOnePaper")
+    public Paper getOnePaper(@RequestParam Integer paperID) {
+        return testPaperService.getOnePaper(paperID);
+    }
+
+
+    @ResponseBody
+    @PostMapping(path="/gradePaper")
+    public void checkPaper(@RequestBody JSONObject data){
+        testPaperService.gradePaper(data);
+    }
 
     /*
     Request body:
@@ -103,4 +99,22 @@ public class DemoController {
     public String getAnswerSheet(@RequestParam Integer asID) {
         return testPaperService.get_paper_content(asID);
     }
+
+    @ResponseBody
+    @GetMapping(path = "/test")
+    public String test(@RequestBody JSONObject data) {
+        String ss = data.getString("123");
+        List<String > lists = (List<String>) data.get("123");
+       /* List<String > list = new ArrayList<>();
+        list.add("12");
+        list.add("34");
+        data.put("get",list);
+        data.get("get")
+
+        */
+        System.out.println(lists);
+        System.out.println(lists.size());
+        System.out.println(lists.get(0));
+        System.out.println(lists.get(1));
+        return "get";}
 }

@@ -36,8 +36,13 @@ public class TestPaperService {
     /*
      * Input--demand:
      * {
+            "tittle": "微软亚洲研究院",
+            "time": 45,
+            "amount": 5,
+            "type": "Java & Algorithm",
+            "deadline": "2020-5-10 8:00 p.m."
      *      num:the number of questions,
-     *      domains: a String separate by ',' || E.G. "sql,web,c++",
+     *      domains: ["vm", "sql"]
      *      description: the paper description
      *
      * }
@@ -50,7 +55,12 @@ public class TestPaperService {
 
         Paper paper = new Paper();
         TestPaper testPaper = new TestPaper();
-        testPaper.setDescription(demand.getString("description"));
+        testPaper.setTittle(demand.getString("tittle"));
+        testPaper.setDeadline(demand.getString("deadline"));
+        testPaper.setStatus(0);
+        testPaper.setTime(demand.getInteger("time"));
+
+
         /*
         获取时间戳
         */
@@ -63,27 +73,85 @@ public class TestPaperService {
 
         testPaperDao.save(testPaper);
 
-        Integer testPaperId = testPaper.getId();
-        testPaper.setAnswer_content_id(testPaperId);
+        Integer paperID = testPaper.getTestPaperID();
+        testPaper.setAnswer_content_id(paperID);
         testPaperDao.save(testPaper);
 
-
-        String domains = demand.getString("domains");
-        String[] domainArray = domains.split(",");
+        // get question list
+        List<String > domains = (List<String>) demand.get("domains");
         List<Question> qList = new ArrayList<>();
-        for(String domain:domainArray) {
+
+
+        for(String domain:domains) {
+            QuestionsInPaper questionsInPaper = new QuestionsInPaper();
+            questionsInPaper.setTestPaper(testPaper);
             System.out.println(domain);
             Question oneHighQuestion = questionService.getOneHighQualityQuestion(domain);
             qList.add(oneHighQuestion);
+            questionsInPaper.setQuestion(oneHighQuestion);
+            questionInPaperDao.save(questionsInPaper);
         }
 
-        // output: the QuestionList
         JSONArray questionList = JSONArray.parseArray(JSON.toJSONString(qList));
+        paper.setPaperID(paperID);
+        String jsonStr = JSONObject.toJSONString(testPaper);
+        paper.setPaperInfo(JSONObject.parseObject(jsonStr));
+        paper.setQuestionList(questionList);
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("paperId", testPaperId);
-        jsonObject.put("QuestionList", questionList);
         return paper;
+
+    }
+
+    public Paper getOnePaper(Integer paperID) {
+
+        TestPaper testPaper = testPaperDao.getOneById(paperID);
+        String jsonStr = JSONObject.toJSONString(testPaper);
+
+
+        List<QuestionsInPaper> list = questionInPaperDao.getAllByPaper(testPaper);
+
+        List<Question> qList = new ArrayList<>();
+        List<QuestionsInPaper> qInfoList = new ArrayList<>();
+
+        for(QuestionsInPaper q:list) {
+            Question question = q.question;
+            qList.add(question);
+            qInfoList.add(q);
+        }
+        //JSONArray questionList = JSONArray.parseArray(JSON.toJSONString(qList));
+        JSONArray questionInfoList = JSONArray.parseArray(JSON.toJSONString(qInfoList));
+
+        Paper paper = new Paper();
+        paper.setPaperID(paperID);
+        paper.setPaperInfo(JSONObject.parseObject(jsonStr));
+        paper.setQuestionList(questionInfoList);
+        return paper;
+
+    }
+
+    /*
+    {
+        paperID: int,
+        questions:[{questionID:int, score:int, comment:String, grade:int },
+                   {questionID:int, score:int, comment:String, grade:int },
+                   {questionID:int, score:int, comment:String, grade:int }]
+    }
+     */
+    public void gradePaper(JSONObject data) {
+        Integer paperID = data.getInteger("paperID");
+        TestPaper testPaper = testPaperDao.getOneById(paperID);
+        List<QuestionsInPaper> questionsInPapers = questionInPaperDao.getAllByPaper(testPaper);
+        JSONArray questions = data.getJSONArray("questions");
+        for(int i=0; i<questions.size(); i++) {
+            JSONObject question = questions.getJSONObject(i);
+            Question q = questionDao.getOneById(question.getInteger("questionID"));
+            QuestionsInPaper questionsInPaper = questionInPaperDao.getOneByQuestionAndTestPaper(q,testPaper);
+            questionsInPaper.setComment(question.getString("comment"));
+            questionsInPaper.setScore(question.getInteger("score"));
+            Integer q_quality = q.getQuality();
+            q.setQuality(q_quality + question.getInteger("grade"));
+            questionDao.save(q);
+        }
 
     }
 
