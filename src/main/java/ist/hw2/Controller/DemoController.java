@@ -1,9 +1,6 @@
 package ist.hw2.Controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import ist.hw2.DTO.Paper;
 import ist.hw2.Entity.Question;
 import ist.hw2.Entity.TestPaper;
@@ -12,9 +9,6 @@ import ist.hw2.Service.TestPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin
@@ -69,6 +63,18 @@ public class DemoController {
     }
 
     @ResponseBody
+    @GetMapping(path = "/g")
+    public JSONObject test() {
+        return testPaperService.getRequest("1588505975051");
+    }
+
+    @ResponseBody
+    @GetMapping(path = "/p")
+    public void testP() {
+        testPaperService.putRequest("1588505975051","123456", (long) 8);
+    }
+
+    @ResponseBody
     @GetMapping(path = "/getOnePaper")
     public Paper getOnePaper(@RequestParam Integer paperID) {
         return testPaperService.getOnePaper(paperID);
@@ -100,18 +106,12 @@ public class DemoController {
         return testPaperService.get_paper_content(asID);
     }
 
+    // use for test
     @ResponseBody
     @GetMapping(path = "/test")
     public String test(@RequestBody JSONObject data) {
         String ss = data.getString("123");
         List<String > lists = (List<String>) data.get("123");
-       /* List<String > list = new ArrayList<>();
-        list.add("12");
-        list.add("34");
-        data.put("get",list);
-        data.get("get")
-
-        */
         System.out.println(lists);
         System.out.println(lists.size());
         System.out.println(lists.get(0));

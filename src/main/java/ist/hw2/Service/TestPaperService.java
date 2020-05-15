@@ -12,7 +12,9 @@ import ist.hw2.Entity.Question;
 import ist.hw2.Entity.QuestionsInPaper;
 import ist.hw2.Entity.TestPaper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,6 +35,27 @@ public class TestPaperService {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private String frontUrl = "http://47.98.245.31:8080/Entity/U62da550221dfe4/CodeRank/Papermsg/";
+
+
+    public JSONObject getRequest(String cid) {
+        String url = frontUrl+cid;
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        String body = responseEntity.getBody();
+        return JSON.parseObject(body);
+    }
+
+    public void putRequest(String cid, String company_id, Long version) {
+        String url = frontUrl+cid;
+        JSONObject data = new JSONObject();
+        data.put("company_id",company_id);
+        data.put("version", version);
+        restTemplate.put(url, data);
+    }
+
     /*
      * Input--demand:
      * {
@@ -41,6 +64,7 @@ public class TestPaperService {
             "amount": 5,
             "type": "Java & Algorithm",
             "deadline": "2020-5-10 8:00 p.m."
+            "companyMessageId": String
      *      num:the number of questions,
      *      domains: ["vm", "sql"]
      *      description: the paper description
@@ -53,11 +77,13 @@ public class TestPaperService {
      */
     public Paper getOneNewTestPaper(JSONObject demand) {
 
+        //JSONObject requestData = getRequest(demand.getString("companyMessageId"));
         Paper paper = new Paper();
         TestPaper testPaper = new TestPaper();
         testPaper.setTittle(demand.getString("tittle"));
         testPaper.setDeadline(demand.getString("deadline"));
         testPaper.setStatus(0);
+        testPaper.setMessageCompany(demand.getString("companyMessageId"));
         testPaper.setTime(demand.getInteger("time"));
 
 
@@ -155,14 +181,51 @@ public class TestPaperService {
             questionDao.save(q);
         }
 
+        String user_rmi_id = testPaper.getMessageUser();
+        JSONObject getData = getRequest(user_rmi_id);
+        Long next_version = getData.getLong("version") + 1;
+        putRequest(user_rmi_id, getData.getString("company_id"), next_version);
+
+
     }
 
+
+    /*
+    {
+        paperID: int,
+        userMessageID:String,
+        questions:[{questionID:int, content:String},
+                   {questionID:int, content:String},
+                   {questionID:int, content:String}]
+    }
+ */
     public void answerPaper(JSONObject data) {
+        TestPaper testPaper = testPaperDao.getOneById(data.getInteger("paperID"));
+        testPaper.setStatus(1);
+        testPaper.setMessageUser(data.getString("userMessageID"));
+        testPaperDao.save(testPaper);
+        JSONArray questions = data.getJSONArray("questions");
+        for(int i=0; i<questions.size(); i++) {
+            JSONObject question = questions.getJSONObject(i);
+            Question q = questionDao.getOneById(question.getInteger("questionID"));
+            QuestionsInPaper questionsInPaper = questionInPaperDao.getOneByQuestionAndTestPaper(q,testPaper);
+            questionsInPaper.setAnswer_content(question.getString("content"));
+            questionsInPaper.setComment("without save test");
+            questionInPaperDao.save(questionsInPaper);
+        }
+        String companyMessageId = testPaper.getMessageCompany();
+        JSONObject getData = getRequest(companyMessageId);
+        Long next_version = getData.getLong("version") + 1;
+        putRequest(companyMessageId, getData.getString("company_id"), next_version);
+
+        /*
         Integer id = data.getInteger("id");
         PaperContent paperContent = new PaperContent();
         paperContent.setID(id);
         paperContent.setContent(data.getString("content"));
         testPaperDao.savePaperContent(paperContent);
+
+         */
     }
 
     public String get_paper_content(Integer id) {

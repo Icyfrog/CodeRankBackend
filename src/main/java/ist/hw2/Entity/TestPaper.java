@@ -32,6 +32,28 @@ public class TestPaper {
     @Column
     private Integer status;
 
+    @Column
+    private String messageCompany;
+
+    @Column
+    private String messageUser;
+
+    public String getMessageCompany() {
+        return messageCompany;
+    }
+
+    public String getMessageUser() {
+        return messageUser;
+    }
+
+    public void setMessageCompany(String messageCompany) {
+        this.messageCompany = messageCompany;
+    }
+
+    public void setMessageUser(String messageUser) {
+        this.messageUser = messageUser;
+    }
+
     public void setTime(Integer time) {
         this.time = time;
     }
