@@ -17,7 +17,7 @@ public class QuestionDao {
 
     public Question getOneById(Integer id) {
         System.out.println("Dao: " + id);
-        return questionRepository.getById(id);
+        return questionRepository.getByQuestionID(id);
     }
 
     public Iterable<Question> getQuestionsByDomain(String domain) {

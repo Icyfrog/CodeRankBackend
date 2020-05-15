@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Question {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer questionID;
 
     // we use mysql to save the question_content and reference_answer temporarily
     @Column
@@ -35,11 +35,11 @@ public class Question {
 
     // Don't forget set/get function
     public Integer getId() {
-        return id;
+        return questionID;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.questionID = id;
     }
 
     public Float getQuality() {

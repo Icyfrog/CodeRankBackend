@@ -2,6 +2,7 @@ package ist.hw2.Controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import ist.hw2.DTO.Paper;
 import ist.hw2.Entity.Question;
 import ist.hw2.Entity.TestPaper;
 import ist.hw2.Service.QuestionService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/demo")
 public class DemoController {
@@ -78,7 +80,7 @@ public class DemoController {
      */
     @ResponseBody
     @PostMapping(path="/addTestPaper")
-    public JSONObject addTestPaper(@RequestBody JSONObject data) {
+    public Paper addTestPaper(@RequestBody JSONObject data) {
         return testPaperService.getOneNewTestPaper(data);
     }
 

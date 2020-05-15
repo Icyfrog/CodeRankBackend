@@ -1,13 +1,18 @@
 package ist.hw2.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class TestPaper {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Integer TestPaperID;
 
     @Column
     private String create_time;
@@ -18,12 +23,13 @@ public class TestPaper {
     @Column
     private Integer answer_content_id;
 
+
     public void setId(Integer id) {
-        this.id = id;
+        this.TestPaperID = id;
     }
 
     public Integer getId() {
-        return id;
+        return TestPaperID;
     }
 
     public Integer getAnswer_content_id() {

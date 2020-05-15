@@ -32,20 +32,20 @@ public class QuestionService {
     private QuestionDao questionDao;
 
     public Iterable<Question> getAllByDomainTest(String domain) {
-        return questionDao.getQuestionsByDomain(domain);
+        return this.questionDao.getQuestionsByDomain(domain);
     }
 
     public List<Question> getAll() {
-        return questionDao.getAll();
+        return this.questionDao.getAll();
     }
 
     public Question getOneById(Integer id) {
         System.out.println("Service" + id);
-        return questionDao.getOneById(id);
+        return this.questionDao.getOneById(id);
     }
 
     public void save(Question question) {
-        questionDao.save(question);
+        this.questionDao.save(question);
     }
 
     public List<Question> getAllRankQuestionsId(String domain) {
@@ -60,12 +60,5 @@ public class QuestionService {
         return questionList.get(0);
     }
 
-/*
-    public Question getOneRankQuestion (String domain, Integer ranking) {
-        Iterable<Question> questionsByDomain = getAllByDomainTest(domain);
-        questionsByDomain.
-    }
 
-
- */
 }
