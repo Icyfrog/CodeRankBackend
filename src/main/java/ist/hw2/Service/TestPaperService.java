@@ -140,6 +140,8 @@ public class TestPaperService {
     public void gradePaper(JSONObject data) {
         Integer paperID = data.getInteger("paperID");
         TestPaper testPaper = testPaperDao.getOneById(paperID);
+        testPaper.setStatus(2);
+        testPaperDao.save(testPaper);
         List<QuestionsInPaper> questionsInPapers = questionInPaperDao.getAllByPaper(testPaper);
         JSONArray questions = data.getJSONArray("questions");
         for(int i=0; i<questions.size(); i++) {
