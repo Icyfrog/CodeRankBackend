@@ -161,7 +161,7 @@ Get on paper
           "questionInfo": null
         }
 ---
-Grade on paper
+Grade one paper
 - localhost:8080/demo/gradePaper
 - @PostMapping
 -       input:
