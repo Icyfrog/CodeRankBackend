@@ -65,7 +65,7 @@ public class DemoController {
     @ResponseBody
     @GetMapping(path = "/g")
     public JSONObject test() {
-        return testPaperService.getRequest("1588505975051");
+        return testPaperService.getRequest("1588777292295");
     }
 
     @ResponseBody

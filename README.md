@@ -88,6 +88,79 @@ Add one test paper
           "questionInfo": null
         }
 ---
+Get on paper
+- localhost:8080/demo/getOnePaper?paperID={int}
+- @GetMapping
+- input: int id for paper
+-       output:
+        {
+          "paperID": 68,
+          "paperInfo": {
+            "finishTime": 12,
+            "companyName": "test",
+            "questionAmt": 2,
+            "type": [
+              "sql",
+              "vm"
+            ],
+            "paperId": 68
+          },
+          "questionList": [
+            {
+              "score": 10,
+              "answer_content": "1 content test",
+              "question": {
+                "difficulty": 1,
+                "domain": "sql",
+                "name": "",
+                "approximate_time": 1,
+                "id": 1,
+                "quality": 879
+              },
+              "testPaper": {
+                "create_time": "2020-05-15 22:54:09",
+                "messageUser": "1588777292295",
+                "answer_content_id": 68,
+                "testPaperID": 68,
+                "messageCompany": "1588505975051",
+                "time": 12,
+                "deadline": "deadline test",
+                "tittle": "test",
+                "status": 2
+              },
+              "comment": "test for grade101",
+              "relation_id": 69
+            },
+            {
+              "score": 10,
+              "answer_content": "27 content test",
+              "question": {
+                "difficulty": 5,
+                "domain": "vm",
+                "name": "中文可以吗",
+                "approximate_time": 10,
+                "question_content": "for test",
+                "id": 27,
+                "quality": 766
+              },
+              "testPaper": {
+                "create_time": "2020-05-15 22:54:09",
+                "messageUser": "1588777292295",
+                "answer_content_id": 68,
+                "testPaperID": 68,
+                "messageCompany": "1588505975051",
+                "time": 12,
+                "deadline": "deadline test",
+                "tittle": "test",
+                "status": 2
+              },
+              "comment": "test for grade101",
+              "relation_id": 70
+            }
+          ],
+          "questionInfo": null
+        }
+---
 Grade on paper
 - localhost:8080/demo/gradePaper
 - @PostMapping
@@ -102,14 +175,14 @@ Answer one test paper(Not implemented yet)
 - localhost:8080/demo/answerPaper
 - @PostMapping
 -     Request body:
-        {
-          "id": 177,      // the id for paper
-          "content": "177 content test"       // content of the interviewee's answer sheet
-        }
+            {
+                paperID: int,
+                userMessageID:String,
+                questions:[{questionID:int, content:String},
+                           {questionID:int, content:String},
+                           {questionID:int, content:String}]
+            }
 - no return 
 -----
-Get one test paper's answer content(Not implemented yet)
-- localhost:8080/demo/getAnswerSheet?asID={Integer}   
-- asID: ID for the test paper
-- @GetMapping
-- return: String for content.
+Get one test paper's answer content
+- just use Get one paper{paperID}
