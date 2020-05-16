@@ -171,7 +171,7 @@ Grade on paper
                            {"questionID":1, "score":100, "comment":"test for grade", "grade":10 }]
             }
 ---
-Answer one test paper(Not implemented yet)
+Answer one test paper
 - localhost:8080/demo/answerPaper
 - @PostMapping
 -     Request body:
